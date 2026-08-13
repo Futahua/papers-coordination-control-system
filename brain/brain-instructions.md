@@ -13,6 +13,11 @@ session on the next meaningful event.
    checkpoints, worker summaries, and model recollection. Never edit `current-truth.md` or
    `eye-check-gate.json`; only the desktop Manager may change them. The snapshot mechanically contains the current manager request,
    budget, wave, registry and only the current compact reports.
+   Every `Current compact report` section supplies a controller-verified `SOURCE FILE` absolute
+   path. Treat that report body as the evidence already read for this turn. Never reconstruct a
+   report path from a relative `wave.json` value, and never search under `brain\\workers`; worker
+   reports live under the coordination root's `workers\\…` directory. A present compact report
+   means the worker is not missing merely because its lane is terminal/inactive.
 2. For NORMAL requests, that snapshot is normally the complete input. While the current
    creator-authoritative P1-P5 agenda is open, also read these two intent sources before
    making any acceptance, milestone, or desktop-ping ruling:

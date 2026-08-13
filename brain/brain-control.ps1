@@ -366,7 +366,7 @@ function New-BrainSnapshot {
     if (-not (Test-Path -LiteralPath $reportPath -PathType Leaf)) { continue }
     $report = Get-Content -LiteralPath $reportPath -Raw
     if ($report.Length -gt 12000) { $report = $report.Substring(0, 12000) + "`n[TRUNCATED BY CONTROLLER]" }
-    $sections.Add("## Current compact report: $name`n$report")
+    $sections.Add("## Current compact report: $name`nSOURCE FILE (already verified by the controller; do not reconstruct this path): $reportPath`n$report")
   }
   [System.IO.File]::WriteAllText($SnapshotPath, ($sections -join "`n`n") + [Environment]::NewLine, [System.Text.UTF8Encoding]::new($false))
 }
