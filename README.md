@@ -4,6 +4,8 @@ Windows-first controller and read-only local dashboard for coordinating one pers
 
 This is a complete control-plane backup: the event-driven BRAIN controller, worker dispatcher, watcher, terminal views, and dashboard. The only excluded material is live/private runtime state—credentials, session IDs, messages, logs, reports, product code, and executable deployments.
 
+The first prolonged production run exposed serious orchestration failures. Read [FAILURE-POSTMORTEM.md](FAILURE-POSTMORTEM.md) before using this system unattended; the repository should not be considered production-safe until those safeguards are implemented and fault-tested.
+
 ## Architecture
 
 ```text
