@@ -1,0 +1,31 @@
+# Runtime state, credentials, and private project evidence
+.git/
+__pycache__/
+*.py[cod]
+*.log
+*.lock
+*.tmp
+*.bak
+*.exe
+*.lnk
+
+# Live coordination state and messages
+worker-mailbox.jsonl
+worker-live-feed.log
+worker-registry.json
+workers/
+deployments/
+brain/runs/
+brain/*.json
+brain/brain-checkpoint.md
+brain/brain-input-snapshot.md
+brain/BRAIN-WORKER.txt
+brain/current-truth.md
+brain/manager-request.md
+brain/manager-investigation-*.md
+brain/*.orphan-*
+brain/watcher-supervisor.log
+
+# Machine-specific wrappers and login helpers
+BRAIN-B-LOGIN.cmd
+reopen

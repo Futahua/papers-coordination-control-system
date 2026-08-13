@@ -1,0 +1,135 @@
+:root {
+  --bg: #101418;
+  --panel: #171d24;
+  --panel-2: #1d252e;
+  --border: #2a3440;
+  --text: #dde4ec;
+  --muted: #8a97a6;
+  --accent: #4caf80;
+  --warn: #e0a34e;
+  --danger: #e06c5c;
+}
+
+* { box-sizing: border-box; }
+
+html {
+  scrollbar-color: #536171 #171d24;
+  scrollbar-width: thin;
+}
+html::-webkit-scrollbar { width: 10px; height: 10px; }
+html::-webkit-scrollbar-track { background: #171d24; }
+html::-webkit-scrollbar-thumb {
+  background: #536171;
+  border: 2px solid #171d24;
+  border-radius: 8px;
+}
+html::-webkit-scrollbar-thumb:hover { background: #69798b; }
+
+html, body { margin: 0; padding: 0; height: 100%; background: var(--bg); color: var(--text); overflow: hidden; }
+body { font: 13px/1.45 system-ui, "Segoe UI", sans-serif; padding: 14px; width: 100%; height: 100vh; display: flex; flex-direction: column; }
+
+.topbar { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; }
+.topbar h1 { font-size: 18px; margin: 0; }
+.topbar-meta { color: var(--muted); display: flex; gap: 12px; align-items: center; }
+.shutdown { color: var(--danger); text-decoration: none; border: 1px solid var(--border); padding: 2px 8px; border-radius: 4px; }
+.shutdown:hover { background: var(--panel-2); }
+
+main { margin-top: 12px; flex: 1; min-height: 0; min-width: 0; display: flex; flex-direction: column; }
+.desktop-action { display: flex; align-items: baseline; gap: 12px; padding: 10px 14px; margin-bottom: 12px; border: 1px solid #d99b45; border-left: 4px solid var(--warn); border-radius: 7px; background: #2b2318; color: #ffe2b8; }
+.desktop-action.hidden { display: none; }
+.action-label { font-weight: 800; font-size: 11px; letter-spacing: .08em; color: var(--warn); white-space: nowrap; }
+
+.brain-panel { background: var(--panel); border: 1px solid var(--border); border-radius: 8px; padding: 11px 14px; margin-bottom: 12px; }
+.brain-panel.is-working { background: color-mix(in srgb, #2fbd73 13%, var(--panel)); border-color: color-mix(in srgb, #45d989 42%, var(--border)); }
+.brain-panel.is-working .brain-checkpoint, .brain-panel.is-working .brain-metrics { color: #a9d9bc; }
+.brain-panel.is-working .brain-metric + .brain-metric::before { background: color-mix(in srgb, #a9d9bc 45%, transparent); }
+.brain-titlebar { display: flex; align-items: center; gap: 10px; min-width: 0; }
+.brain-panel h2 { margin: 0; font-size: 13px; letter-spacing: .06em; text-transform: uppercase; color: var(--accent); }
+.brain-status { font-size: 12px; font-weight: 650; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.brain-status.working { color: var(--accent); }
+.brain-status.claiming { color: var(--warn); }
+.brain-status.stopped { color: var(--danger); }
+.brain-checkpoint { color: var(--muted); margin: 6px 0 7px; font-size: 12px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.brain-metrics { display: flex; align-items: center; flex-wrap: wrap; color: var(--muted); font-size: 11px; line-height: 1.25; }
+.brain-metric { display: inline-flex; align-items: center; min-width: 0; }
+#brain-last-decision { color: #8fb6d8; font-variant-numeric: tabular-nums; }
+.brain-metric:empty { display: none; }
+.brain-metric + .brain-metric::before { content: ""; width: 1px; height: 12px; margin: 0 8px; background: var(--border); }
+
+.columns { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); grid-template-rows: repeat(2, minmax(0, 1fr)); gap: 12px; flex: 1; min-width: 0; min-height: 0; overflow: hidden; }
+/* The worker's identity/status is the card.  Its live reasoning is a timeline
+   beneath it, not a second boxed panel. */
+.member { background: transparent; border: 0; display: flex; flex-direction: column; min-width: 0; min-height: 0; }
+.member header { padding: 10px 12px; border: 1px solid var(--border); background: var(--panel-2); border-radius: 8px; }
+/* A live worker is visible at a glance without changing the REPORT READY cue.
+   The whole grid cell is tinted, while the transcript remains borderless. */
+.member.is-working { background: color-mix(in srgb, #2fbd73 13%, var(--panel)); border: 1px solid color-mix(in srgb, #45d989 42%, var(--border)); border-radius: 8px; }
+.member.is-working header { background: color-mix(in srgb, #2fbd73 19%, var(--panel-2)); border-color: transparent; border-radius: 7px 7px 0 0; }
+.member.is-working .stream { color: #d7f6e4; }
+.member.is-working .report, .member.is-working .last-write { color: #a9d9bc; }
+.member.is-working .report .title, .member.is-working h3 { color: #effff5; }
+.member h3 { margin: 0; font-size: 14px; }
+.member-state { margin-top: 2px; font-size: 11px; font-weight: 700; }
+.member-state.working { color: var(--accent); }
+.member-state.attention { color: var(--warn); }
+.member-state.standby { color: var(--muted); }
+.member .last-write { color: #8fb6d8; font-size: 11px; margin-top: 4px; font-variant-numeric: tabular-nums; }
+.member .report { color: var(--muted); font-size: 12px; margin-top: 4px; }
+.member .report .title { color: var(--text); }
+.member .mailbox { color: var(--warn); font-size: 11px; margin-top: 4px; }
+
+.stream-wrap { position: relative; display: flex; flex: 1; min-width: 0; min-height: 0; }
+.stream { width: 100%; margin: 0; padding: 9px 12px; overflow-y: auto; flex: 1; min-width: 0; min-height: 0;
+  font: 11.5px/1.5 ui-monospace, "Cascadia Mono", Consolas, monospace; white-space: pre-wrap; word-break: break-word; color: var(--text);
+  scrollbar-width: none; -ms-overflow-style: none; }
+.stream::-webkit-scrollbar { display: none; }
+.jump-end { position: absolute; right: 10px; bottom: 10px; width: 28px; height: 28px; border: 1px solid var(--border); border-radius: 50%; background: #26313d; color: var(--text); font: 18px/20px system-ui, sans-serif; cursor: pointer; box-shadow: 0 2px 8px #0008; }
+.jump-end:hover { background: #344354; }
+.jump-end.hidden { display: none; }
+
+/* Mirrors OpenCode's native reasoning-part treatment: a quiet, readable
+   stream of the provider's own Markdown text, distinct from tool/terminal
+   output.  The dashboard intentionally does not infer labels or rewrite it. */
+.reasoning-stream { padding: 12px; font: 13px/1.5 system-ui, "Segoe UI", sans-serif; color: var(--muted); }
+.reasoning-part { width: 100%; color: var(--muted); }
+.reasoning-part + .reasoning-part { margin-top: 16px; }
+.reasoning-part.active { color: var(--text); border-left: 2px solid var(--accent); padding-left: 8px; margin-left: -10px; animation: reasoning-live 1.5s ease-in-out infinite; }
+.reasoning-part.active .reasoning-text { color: inherit; }
+.reasoning-text { margin: 0; white-space: pre-wrap; overflow-wrap: anywhere; word-break: break-word; font: inherit; color: inherit; }
+.reasoning-text p { margin: 0 0 10px; }
+.reasoning-text p:last-child { margin-bottom: 0; }
+.reasoning-text :is(h1,h2,h3,h4,h5,h6) { margin: 14px 0 7px; color: var(--text); font-size: 13px; line-height: 1.3; }
+.reasoning-text h1 { font-size: 16px; }.reasoning-text h2 { font-size: 14px; }
+.reasoning-text :is(ul,ol) { margin: 7px 0 10px; padding-left: 22px; }
+.reasoning-text li { margin: 3px 0; }
+.reasoning-text blockquote { margin: 8px 0; padding-left: 9px; border-left: 2px solid var(--border); color: var(--muted); }
+.reasoning-text code { padding: 1px 4px; border-radius: 3px; background: color-mix(in srgb, #9bc7ff 10%, transparent); color: #9bc7ff; font: 11px/1.4 ui-monospace, "Cascadia Mono", Consolas, monospace; }
+.reasoning-text pre { margin: 8px 0; padding: 9px; border: 1px solid var(--border); border-radius: 5px; background: #121820; overflow-x: auto; }
+.reasoning-text pre code { padding: 0; background: none; color: var(--text); }
+.reasoning-text a { color: #8fc1ff; text-decoration: none; }.reasoning-text a:hover { text-decoration: underline; }
+.tool-action { display: flex; align-items: center; gap: 8px; font: 11px/1.3 ui-monospace, "Cascadia Mono", Consolas, monospace; }
+.tool-name { color: var(--text); font-weight: 700; }
+.tool-status { color: var(--muted); text-transform: lowercase; }
+.tool-status::before { content: "· "; color: var(--border); }
+.tool-detail { margin-top: 3px; font: 11px/1.35 ui-monospace, "Cascadia Mono", Consolas, monospace; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+@keyframes reasoning-live {
+  0%, 100% { opacity: .72; background: color-mix(in srgb, var(--accent) 0%, transparent); box-shadow: 0 0 0 transparent; }
+  50% { opacity: 1; background: color-mix(in srgb, var(--accent) 9%, transparent); box-shadow: 0 0 14px color-mix(in srgb, var(--accent) 18%, transparent); }
+}
+.brain-output { margin: -4px 0 12px; }
+.brain-stream { max-height: 180px; margin-top: 7px; }
+
+.foot { color: var(--muted); margin-top: 8px; font-size: 11px; flex: 0 0 auto; }
+
+@media (max-width: 700px) {
+  /* The desktop uses a fixed-height flex shell. On a phone this must become
+     ordinary document flow or the root viewport retains overflow-y:hidden. */
+  html { height: auto; min-height: 100%; overflow-x: hidden; overflow-y: auto; }
+  body { display: block; width: 100%; max-width: 100vw; height: auto; min-height: 100vh; overflow-x: hidden; overflow-y: visible; }
+  main { display: block; min-height: 0; }
+  /* A native reasoning part can be several thousand characters.  Mobile
+     cards must never expand with it: browse between cards on the page and
+     inspect each bounded live feed inside its own scroll area. */
+  .columns { grid-template-columns: 1fr; grid-template-rows: none; grid-auto-rows: minmax(280px, 52vh); overflow: visible; }
+  .member { height: 52vh; min-height: 280px; max-height: 520px; }
+}

@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Papers Coordination Dashboard</title>
+<link rel="stylesheet" href="/dashboard.css">
+</head>
+<body>
+<header class="topbar">
+  <h1>Papers Coordination Dashboard</h1>
+  <div class="topbar-meta">
+    <span id="updated-at">—</span>
+    <a class="shutdown" href="/api/shutdown" title="Stop the dashboard server">shutdown</a>
+  </div>
+</header>
+
+<main>
+  <section id="desktop-action" class="desktop-action hidden" aria-live="polite">
+    <span class="action-label">DESKTOP MANAGER</span>
+    <strong id="desktop-action-text"></strong>
+  </section>
+  <section class="brain-panel" id="brain-panel">
+    <div class="brain-titlebar"><h2>CLI BRAIN</h2><div id="brain-status" class="brain-status">loading…</div></div>
+    <div id="brain-checkpoint" class="brain-checkpoint">—</div>
+    <div class="brain-metrics">
+      <span id="brain-usage" class="brain-metric">usage: —</span>
+      <span id="brain-last-decision" class="brain-metric"></span>
+      <span id="brain-wave" class="brain-metric"></span>
+    </div>
+  </section>
+  <section class="brain-output"><div class="stream-wrap"><div id="brain-stream" class="stream reasoning-stream brain-stream">[BRAIN reasoning idle]</div><button class="jump-end hidden" data-for="brain-stream" type="button" aria-label="Jump BRAIN feed to live end" title="Jump to live end">↓</button></div></section>
+
+  <section class="columns" id="columns"></section>
+</main>
+
+<footer class="foot">Read-only local dashboard. Binds 127.0.0.1 only; worker data is never modified.</footer>
+<script src="/dashboard.js"></script>
+</body>
+</html>
