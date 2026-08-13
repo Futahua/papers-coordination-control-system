@@ -14,6 +14,7 @@ $SessionId = [string]$Registry.$Worker.sessionId
 $Lane = $Wave.workers.$Worker
 
 if ($Lane.active -ne $true) { throw "$Worker lane is not active." }
+if ([string]$Lane.status -in @('LANE_COMPLETE', 'COMPLETE', 'STOPPED')) { throw "$Worker lane is already complete; refusing duplicate dispatch." }
 if ([string]::IsNullOrWhiteSpace($SessionId)) { throw "$Worker session ID is missing." }
 
 $prompt = @"

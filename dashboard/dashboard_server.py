@@ -570,13 +570,16 @@ def build_status(root):
     running_sessions = running_worker_sessions()
     for key, reg in registry.items():
         lane = (wave.get("workers") or {}).get(key) or {}
-        # A verified OpenCode process carrying this exact worker session is
-        # stronger current evidence than a stale wave manifest.  Dispatches
-        # occasionally write `active:false` before their child process exits;
-        # never label that live worker STANDBY.
+        # A verified OpenCode process is stronger than a stale active flag, but
+        # never stronger than the lane's explicit terminal result.  A duplicate
+        # launcher can leave a persistent session alive and merely produce
+        # “standing by” chatter; that is not actual work.
         running = bool(reg.get("session") and reg["session"] in running_sessions)
-        in_wave = (isinstance(lane, dict) and lane.get("active") is True) or running
-        if running:
+        lane_complete = str(lane.get("status") or "").upper() in {"LANE_COMPLETE", "COMPLETE", "STOPPED"}
+        if lane_complete:
+            running = False
+        in_wave = ((isinstance(lane, dict) and lane.get("active") is True) or running) and not lane_complete
+        if running and not lane_complete:
             active_workers.add(key)
         expected_report = str(lane.get("report") or "")
         expected_path = os.path.join(root, *expected_report.replace("\\", "/").split("/")) if expected_report else None

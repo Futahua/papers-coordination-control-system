@@ -696,6 +696,9 @@ function Dispatch-Worker {
   $registered = $registry.$Worker
   $lane = $wave.workers.$Worker
   if ($lane.active -ne $true) { throw "$Worker has no active lane in wave.json." }
+  if ([string]$lane.status -in @('LANE_COMPLETE', 'COMPLETE', 'STOPPED')) {
+    throw "$Worker lane is already complete; refusing duplicate dispatch."
+  }
   if ([string]::IsNullOrWhiteSpace([string]$lane.assignment)) { throw "$Worker assignment is empty." }
   $assignmentText = [string]$lane.assignment
   foreach ($requiredHintPart in @('LEAD HINT:', 'mechanism=', 'first=', 'avoid=', 'proof=', 'stop=', 'TASK:')) {
