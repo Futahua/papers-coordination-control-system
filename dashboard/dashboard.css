@@ -65,9 +65,10 @@ main { margin-top: 12px; flex: 1; min-height: 0; min-width: 0; display: flex; fl
    The whole grid cell is tinted, while the transcript remains borderless. */
 .member.is-working { background: color-mix(in srgb, #2fbd73 13%, var(--panel)); border: 1px solid color-mix(in srgb, #45d989 42%, var(--border)); border-radius: 8px; }
 .member.is-working header { background: color-mix(in srgb, #2fbd73 19%, var(--panel-2)); border-color: transparent; border-radius: 7px 7px 0 0; }
-.member.is-working .stream { color: #d7f6e4; }
-.member.is-working .report, .member.is-working .last-write { color: #a9d9bc; }
-.member.is-working .report .title, .member.is-working h3 { color: #effff5; }
+.member.is-working .stream { color: #f1fff6; text-shadow: 0 1px 1px rgb(0 0 0 / 34%); }
+.member.is-working .member-state { color: #7fffb7; text-shadow: 0 1px 1px rgb(0 0 0 / 45%); }
+.member.is-working .report, .member.is-working .last-write { color: #c8f6d8; }
+.member.is-working .report .title, .member.is-working h3 { color: #ffffff; text-shadow: 0 1px 1px rgb(0 0 0 / 45%); }
 .member h3 { margin: 0; font-size: 14px; }
 .member-state { margin-top: 2px; font-size: 11px; font-weight: 700; }
 .member-state.working { color: var(--accent); }
