@@ -347,7 +347,10 @@ function New-BrainSnapshot {
   }
   foreach ($name in @('winter', 'gazelle', 'roketpuncha', 'ning')) {
     $lane = $wave.workers.$name
-    if ($lane.active -ne $true -or [string]::IsNullOrWhiteSpace([string]$lane.report)) { continue }
+    # A worker marks its lane inactive as it completes. Its compact report must
+    # still enter the next BRAIN snapshot; otherwise the model sees only a
+    # relative path, looks below `brain\\workers`, and falsely requests recovery.
+    if ([string]::IsNullOrWhiteSpace([string]$lane.report)) { continue }
     $row = $workerRows | Where-Object { $_.Worker -eq $registry.$name.displayName } | Select-Object -First 1
     if ($null -ne $row -and $row.State -in @('NEEDS ATTENTION', 'STALLED')) {
       $dispatchDir = Join-Path $LogRoot "workers\$name\dispatch"
